@@ -8,5 +8,6 @@ dependencies = [
     "fastapi>=0.117.1",
     "google-cloud-translate>=3.21.1",
     "openai-agents>=0.3.2",
+    "pymongo>=4.15.1",
     "uvicorn>=0.37.0",
 ]
