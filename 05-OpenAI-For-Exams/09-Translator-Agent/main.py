@@ -4,7 +4,7 @@ import os
 import requests
 from config import model
 
-
+# Tool For Agent
 @function_tool
 def translate_text(
     text: str, target_lang: str, source_lang: Optional[str] = None
