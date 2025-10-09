@@ -60,7 +60,7 @@ translator_agent = Agent(
     model_settings=ModelSettings(tool_choice="required"),
 )
 
-# Orchestrator: routes to sub-agents as tools (manager pattern)
+# Orchestrator: routes to sub-agents as tools (manager pattern) this is also called main agent 
 orchestrator = Agent(
     name="Orchestrator",
     instructions=(
