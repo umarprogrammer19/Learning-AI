@@ -33,3 +33,10 @@ print(arr[5, 4])
 print(arr[0:2, 3:6])
 print(arr[3:, 3:])
 print(arr[:, 2])
+
+# Boolean Indexing
+arr = np.arange(11, 21)
+bool_index = arr % 2 == 0
+print(bool_index)
+arr = arr[bool_index]
+print(arr)
