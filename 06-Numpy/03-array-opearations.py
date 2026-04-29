@@ -9,5 +9,18 @@ print(a1 - a2)
 print(a1 * a2)
 print(a1 / a2)
 print(a1 // a2)
-print(a1 ** a2)
+print(a1**a2)
 
+# Broadcasting
+l = [10, 20, 30, 40]
+arr = np.array(l)
+print(arr + 10)
+
+arr2 = np.arange(1, 26).reshape(5, 5)
+print(arr2 + 10)
+print(arr2 * 2)
+
+# Deep And Shallow Copy
+a = np.arange(1, 21)
+slice = a[:5]
+print(slice * 10)
