@@ -78,5 +78,5 @@ print("\nBoolean mask (True where element is even):\n", bool_mask)
 even_numbers = vector[bool_mask]
 print("\nFiltered array (only even numbers):\n", even_numbers)
 
-# Pro-tip: You can do this in one single line without saving the mask!
+# Pro-tip: You can do this in one single line without saving.
 print(vector[vector % 2 == 0])
