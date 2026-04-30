@@ -37,3 +37,16 @@ D = np.array([[9, 4, 5], [1, 3, 2], [7, 6, 8]])
 CD = np.dot(C, D)
 print(CD)
 print(CD.T)
+
+# Advance Array Manipulation
+a = np.array([1, 2, 3, 4])
+b = np.array([5, 6, 7, 8])
+
+# Vertical Stack
+print(np.vstack((a, b)))
+
+# Horizontal Stack
+print(np.hstack((a, b)))
+
+# Column Stack
+print(np.column_stack((a, b)))
