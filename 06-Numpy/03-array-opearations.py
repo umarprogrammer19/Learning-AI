@@ -39,6 +39,9 @@ print(CD)
 print(CD.T)
 
 # Advance Array Manipulation
+
+# Stacking Arrays (Vectors)
+
 a = np.array([1, 2, 3, 4])
 b = np.array([5, 6, 7, 8])
 
@@ -50,3 +53,18 @@ print(np.hstack((a, b)))
 
 # Column Stack
 print(np.column_stack((a, b)))
+
+# Splitting Arrays
+c = np.arange(16).reshape(4, 4)
+print(c)
+
+# Horizontal Split
+print(np.hsplit(c, 2))
+# print(np.hsplit(c, 3)) # Error array split does not result in an equal division
+print(np.hsplit(c, 4))
+
+# Vertical Split
+print(np.vsplit(c, 2))
+
+for i in c:
+    print(c)
