@@ -24,3 +24,10 @@ print(arr2 * 2)
 a = np.arange(1, 21)
 slice = a[:5]
 print(slice * 10)
+
+# Matrix Opearations
+
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+print(A @ B)
+print(np.dot(A, B))
