@@ -34,4 +34,6 @@ print(np.dot(A, B))
 
 C = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 D = np.array([[9, 4, 5], [1, 3, 2], [7, 6, 8]])
-print(np.dot(C, D))
+CD = np.dot(C, D)
+print(CD)
+print(CD.T)
