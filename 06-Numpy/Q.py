@@ -13,8 +13,9 @@ data = np.array(
 
 # 1) Get the shape of the matrix.
 shape_of_matrix = data.shape
-print(shape_of_matrix)
 
 # 2) Find the average age of students.
 average = np.mean(data[:, 0])
-print(average)
+
+# 3) Extract Math Marks of all students
+maths_marks = data[:, 1]
