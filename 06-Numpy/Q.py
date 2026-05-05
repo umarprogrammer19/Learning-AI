@@ -30,4 +30,4 @@ student = data[data[:, 1] > 90]
 data[:, 1] = data[:, 1] + 5
 
 # 7) Find How many students are younger than 19
-younger = data[data[:, 0] < 19]
+younger = len(data[data[:, 0] < 19])
