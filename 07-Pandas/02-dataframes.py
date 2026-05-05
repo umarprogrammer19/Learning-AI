@@ -23,3 +23,24 @@ print(df2)
 columns = ["Name", "Age", "City", "Salary"]
 df2 = pd.DataFrame(data_list, columns)
 print(df2)
+
+# Selection And Indexing Of Columns
+cols = df[["Name", "City"]]
+
+# Creating a new columns
+df["Designation"] = ["Doctor", "Engineer", "Finance", "Artist"]
+print(df)
+
+# Removing columns
+drop = df.drop("Age", axis=1)
+print(drop)  # Main Data frame should be same this is a copy of data frame
+df.drop("Age", axis=1, inplace=True)
+print(df)
+print(df.drop(2))  # Row Because By default Axis is 0
+
+# Selecting Rows
+row = df.loc[[0, 1]]
+print(row)
+
+row2 = df.iloc[0]
+print(row2)
