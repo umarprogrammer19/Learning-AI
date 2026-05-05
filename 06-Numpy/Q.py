@@ -19,3 +19,7 @@ average = np.mean(data[:, 0])
 
 # 3) Extract Math Marks of all students
 maths_marks = data[:, 1]
+
+# 4) Find The Highest Science Marks
+max_science = np.max(data[:, 2])
+
