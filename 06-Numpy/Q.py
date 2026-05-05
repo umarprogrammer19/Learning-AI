@@ -35,3 +35,6 @@ younger = len(data[data[:, 0] < 19])
 # 8) Calculate the average marks in each subject.
 subjects = data[:, 1:]
 average = np.mean(subjects, axis=0)
+
+# 9) Get the student of the data who score at least 80 in both subjects
+student_score = data[(data[:, 1] >= 80) & (data[:, 2] >= 80)]
