@@ -26,3 +26,8 @@ max_science = np.max(data[:, 2])
 # 5) Get Details Of the student who scored more than 90 in maths.
 student = data[data[:, 1] > 90]
 
+# 6) Increase Math Marks Of All Student By 5
+data[:, 1] = data[:, 1] + 5
+
+# 7) Find How many students are younger than 19
+younger = data[data[:, 0] < 19]
