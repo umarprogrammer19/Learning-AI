@@ -23,3 +23,6 @@ maths_marks = data[:, 1]
 # 4) Find The Highest Science Marks
 max_science = np.max(data[:, 2])
 
+# 5) Get Details Of the student who scored more than 90 in maths.
+student = data[data[:, 1] > 90]
+
