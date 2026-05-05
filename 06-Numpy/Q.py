@@ -31,3 +31,7 @@ data[:, 1] = data[:, 1] + 5
 
 # 7) Find How many students are younger than 19
 younger = len(data[data[:, 0] < 19])
+
+# 8) Calculate the average marks in each subject.
+subjects = data[:, 1:]
+average = np.mean(subjects, axis=0)
