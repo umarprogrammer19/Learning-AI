@@ -51,4 +51,12 @@ print(d)
 d = df.loc[[2, 3]][["Name", "Designation"]]
 print(d)
 
+# Conditional Selection
 
+# I only want to see those people whose Salary is 70000 or Above.
+filtered = df[df["Salary"] >= 70000]
+print(filtered)
+
+# I only want to see those people whose Salary is 70000 or Above And From Paris.
+filtered = df[(df["Salary"] >= 70000) & (df["City"] == "Paris")]
+print(filtered)
