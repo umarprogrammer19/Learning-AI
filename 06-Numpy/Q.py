@@ -38,3 +38,6 @@ average = np.mean(subjects, axis=0)
 
 # 9) Get the student of the data who score at least 80 in both subjects
 student_score = data[(data[:, 1] >= 80) & (data[:, 2] >= 80)]
+
+# 10) Replace all Science Marks < 75 with 0.
+data[data[:, 2] < 75, 2] = 0
