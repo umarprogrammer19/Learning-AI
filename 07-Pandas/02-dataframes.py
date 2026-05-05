@@ -44,3 +44,11 @@ print(row)
 
 row2 = df.iloc[0]
 print(row2)
+
+# Selecting Subsets of rows and columns
+d = df.loc[[0, 1]][["City", "Salary"]]
+print(d)
+d = df.loc[[2, 3]][["Name", "Designation"]]
+print(d)
+
+
