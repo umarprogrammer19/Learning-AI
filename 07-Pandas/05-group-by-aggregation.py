@@ -24,3 +24,6 @@ df = pd.DataFrame(data)
 sum_of_cat = df.groupby("Category")["Sales"].sum()
 print(sum_of_cat)
 
+# 2) Group by Store and calculate the sum of Sales
+sum_of_store = df.groupby("Store")["Sales"].sum()
+print(sum_of_store)
