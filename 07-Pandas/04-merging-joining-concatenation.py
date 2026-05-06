@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 # 1) Merging Two DataFrames (Like SQL Joins)
