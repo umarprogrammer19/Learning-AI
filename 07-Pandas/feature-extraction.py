@@ -56,10 +56,10 @@ df = pd.read_csv(r"anime.csv")
 
 
 # Make a New Column For Episode count
-def extract_episodes(txt):
+def extract_episodes(text):
     check = False
     data = ""
-    for i in txt:
+    for i in text:
         if i == ")":
             check = False
             return data
@@ -70,3 +70,17 @@ def extract_episodes(txt):
 
 
 df["Episodes"] = df["Title"].apply(extract_episodes).str.replace(" eps", "").astype(int)
+
+
+# Make a new column for timestamp
+def extraction_time(txt):
+    data = ""
+    for i in range(len(txt)):
+        if txt[i] == ")":
+            for j in range(i + 1, i + 20):
+                data += txt[j]
+
+            return data
+
+
+df["Time Stamp"] = df["Title"].apply(extraction_time)
