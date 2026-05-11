@@ -17,3 +17,19 @@ print(df1)
 # 2  3  30  300
 # 3  4  40  400
 # 4  5  50  500
+
+# Shape
+print(df1.shape)  # (5, 3)
+
+# Colums
+print(df1.columns)  # Index(['A', 'B', 'C'], dtype='str')
+
+# Information
+print(df1.info())
+
+# Describe
+print(df1.describe())
+
+# Broadcasting
+df1["A"] = df1["A"] + 10
+
