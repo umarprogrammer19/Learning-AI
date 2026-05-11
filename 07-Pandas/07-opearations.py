@@ -33,3 +33,11 @@ print(df1.describe())
 # Broadcasting
 df1["A"] = df1["A"] + 10
 
+
+# DataFrames Applying Functions
+def square(x):
+    return x**2
+
+
+df1["D"] = df1["B"].apply(square)
+print(df1)
