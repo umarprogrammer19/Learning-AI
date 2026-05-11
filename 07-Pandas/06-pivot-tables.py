@@ -85,3 +85,7 @@ pt = pd.pivot_table(
 print(pt)
 pt2 = pd.pivot_table(df, values=["Sales", "Units"], index="Region", columns="Product")
 print(pt2)
+
+# Cross Tabs
+ct = pd.crosstab(df["Region"], df["Product"])
+print(ct)  # Returns Counts Of Values
