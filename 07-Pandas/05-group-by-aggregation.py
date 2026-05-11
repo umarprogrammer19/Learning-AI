@@ -33,3 +33,10 @@ print(sum_of_store)
 
 sums = df.groupby(["Category", "Store"])["Sales"].sum()
 print(sums)
+
+# Aggregation
+mean_of_sales = df["Sales"].mean()
+print(mean_of_sales)
+
+all = df["Sales"].agg(["sum", "mean", "min", "max", "count", "std", "median"])
+print(all)
