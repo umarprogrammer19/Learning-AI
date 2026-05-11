@@ -1,61 +1,29 @@
 import numpy as np
 import pandas as pd
 
+# Setting a random seed so the "random" numbers are exactly the same every
+# time this script is run. This is best practice for reproducible examples!
+np.random.seed(42)
+
+# 1) DataFrame Initialization
+print("--- 1) Original DataFrame ---")
+
 data = {
     "Date": pd.date_range("2023-01-01", periods=20),
     "Product": ["A", "B", "C", "D"] * 5,
-    "Region": [
-        "East",
-        "West",
-        "North",
-        "South",
-        "East",
-        "West",
-        "North",
-        "South",
-        "East",
-        "West",
-        "North",
-        "South",
-        "East",
-        "West",
-        "North",
-        "South",
-        "East",
-        "West",
-        "North",
-        "South",
-    ],
+    "Region": ["East", "West", "North", "South"] * 5,
     "Sales": np.random.randint(100, 1000, 20),
     "Units": np.random.randint(10, 100, 20),
-    "Rep": [
-        "John",
-        "Mary",
-        "Bob",
-        "Alice",
-        "John",
-        "Mary",
-        "Bob",
-        "Alice",
-        "John",
-        "Mary",
-        "Bob",
-        "Alice",
-        "John",
-        "Mary",
-        "Bob",
-        "Alice",
-        "John",
-        "Mary",
-        "Bob",
-        "Alice",
-    ],
+    "Rep": ["John", "Mary", "Bob", "Alice"] * 5,
 }
 
 df = pd.DataFrame(data)
+
+# Extracting month and quarter from the datetime column
 df["Month"] = df["Date"].dt.month_name()
 df["Quarter"] = "Q" + df["Date"].dt.quarter.astype(str)
 
+print(df)
 # Data Frame:
 #          Date Product Region  Sales  Units    Rep    Month Quarter
 # 0  2023-01-01       A   East    415     23   John  January      Q1
@@ -79,13 +47,56 @@ df["Quarter"] = "Q" + df["Date"].dt.quarter.astype(str)
 # 18 2023-01-19       C  North    853     29    Bob  January      Q1
 # 19 2023-01-20       D  South    500     44  Alice  January      Q1
 
-pt = pd.pivot_table(
+# 2) Pivot Tables
+print("\n--- 2) Pivot Tables ---")
+# pd.pivot_table() reshapes your data.
+# index   = What goes on the Rows
+# columns = What goes on the Columns
+# values  = What numbers fill the inside of the table
+# aggfunc = How to calculate the overlapping numbers (mean is the default)
+
+# Example A: Median Sales grouped by Region (Rows) and Product (Columns)
+pt_median = pd.pivot_table(
     df, values="Sales", index="Region", columns="Product", aggfunc="median"
 )
-print(pt)
-pt2 = pd.pivot_table(df, values=["Sales", "Units"], index="Region", columns="Product")
-print(pt2)
+print("Median Sales by Region and Product:\n", pt_median)
 
-# Cross Tabs
-ct = pd.crosstab(df["Region"], df["Product"])
-print(ct)  # Returns Counts Of Values
+# Example B: Multiple Values
+# If you pass a list to 'values', Pandas creates a multi-level table.
+pt_multi = pd.pivot_table(
+    df,
+    values=["Sales", "Units"],
+    index="Region",
+    columns="Product",
+    aggfunc="sum",  # Changed to 'sum' as it makes more business sense for this view
+)
+print("\nTotal Sales AND Total Units by Region and Product:\n", pt_multi)
+
+# Example C: Margins (Grand Totals)
+# Adding margins=True automatically calculates the grand totals for rows and columns!
+pt_totals = pd.pivot_table(
+    df,
+    values="Sales",
+    index="Rep",
+    columns="Product",
+    aggfunc="sum",
+    margins=True,
+    margins_name="Grand Total",
+)
+print("\nSales by Rep and Product (With Grand Totals):\n", pt_totals)
+
+
+# 3) Cross Tabulations (Crosstab)
+print("\n--- 3) Cross Tabulations ---")
+# pd.crosstab() is a specialized version of a pivot table.
+# By default, it ignores the 'values' entirely and just COUNTS how many times
+# a specific combination occurs in your data (a frequency table).
+
+ct_frequency = pd.crosstab(index=df["Region"], columns=df["Product"])
+print(
+    "Frequency Count (How many times did each Region sell each Product?):\n",
+    ct_frequency,
+)
+
+# Note: In this specific dataset, the count is always 5 because of how we
+# multiplied the lists during initialization: ["A", "B", "C", "D"] * 5
