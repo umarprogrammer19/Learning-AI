@@ -1,5 +1,8 @@
 import pandas as pd
 
+# 1) DataFrame Initialization
+print("--- Original Sales Data ---")
+
 data = {
     "Category": ["A", "B", "A", "B", "A", "B", "A", "B"],
     "Store": ["S1", "S1", "S2", "S2", "S1", "S2", "S2", "S1"],
@@ -9,34 +12,51 @@ data = {
 }
 
 df = pd.DataFrame(data)
+print(df)
 
-#   Category Store  Sales  Quantity        Date
-# 0        A    S1    100        10     2023-01-01
-# 1        B    S1    200        15     2023-01-02
-# 2        A    S2    150        12     2023-01-03
-# 3        B    S2    250        18     2023-01-04
-# 4        A    S1    120         8     2023-01-05
-# 5        B    S2    180        20     2023-01-06
-# 6        A    S2    200        15     2023-01-07
-# 7        B    S1    300        25     2023-01-08
 
-# 1) Group by Category and calculate the sum of Sales
-sum_of_cat = df.groupby("Category")["Sales"].sum()
-print(sum_of_cat)
+# 2) Single Column Grouping
+print("\n--- 2) Single Column Grouping ---")
 
-# 2) Group by Store and calculate the sum of Sales
-sum_of_store = df.groupby("Store")["Sales"].sum()
-print(sum_of_store)
+# Step 1: df.groupby("Category") -> SPLITS data into Group A and Group B
+# Step 2: ["Sales"] -> SELECTS only the Sales column to look at
+# Step 3: .sum() -> APPLIES the sum function and COMBINES the result
+category_sales_sum = df.groupby("Category")["Sales"].sum()
+print("Total Sales per Category:\n", category_sales_sum)
 
-# Group by multiple columns
-# Group by Category and Store
+# Doing the same thing, but grouping by Store instead.
+store_sales_sum = df.groupby("Store")["Sales"].sum()
+print("\nTotal Sales per Store:\n", store_sales_sum)
 
-sums = df.groupby(["Category", "Store"])["Sales"].sum()
-print(sums)
 
-# Aggregation
-mean_of_sales = df["Sales"].mean()
-print(mean_of_sales)
+# 3) Multiple Column Grouping
+print("\n--- 3) Multiple Column Grouping ---")
 
-all = df["Sales"].agg(["sum", "mean", "min", "max", "count", "std", "median"])
-print(all)
+# By passing a list of columns ["Category", "Store"], Pandas creates a
+# "MultiIndex". It groups by Category first, and then by Store within each Category.
+cat_store_sums = df.groupby(["Category", "Store"])["Sales"].sum()
+print("Sales grouped by Category, then by Store:\n", cat_store_sums)
+
+
+# 4) Basic Aggregation (.agg)
+print("\n--- 4) Basic Aggregation ---")
+
+# You can run a single mathematical method directly on a column
+overall_mean = df["Sales"].mean()
+print(f"Overall Average Sales (All Stores): {overall_mean}")
+
+# The .agg() function allows you to run MULTIPLE mathematical calculations
+# at the exact same time. You just pass a list of the function names as strings.
+all_sales_metrics = df["Sales"].agg(
+    ["sum", "mean", "min", "max", "count", "std", "median"]
+)
+print("\nComprehensive Sales Metrics:\n", all_sales_metrics)
+
+
+# 5) Advanced Aggregation (Bonus)
+print("\n--- 5) Advanced GroupBy with Aggregation ---")
+
+# You can combine .groupby() and .agg() to generate complex reports in one line!
+# Here, we group by 'Store', and calculate BOTH the sum and the average of 'Sales'.
+store_performance = df.groupby("Store")["Sales"].agg(["sum", "mean"])
+print("Store Performance Report (Total vs Average Sales):\n", store_performance)
