@@ -54,4 +54,19 @@ df = pd.read_csv(r"anime.csv")
 # 48    49  Mob Psycho 100 IIITV (12 eps)Oct 2022 - Dec 20...   8.71
 # 49    50  Rurouni Kenshin: Meiji Kenkaku Romantan - Tsui...   8.71
 
+
 # Make a New Column For Episode count
+def extract_episodes(txt):
+    check = False
+    data = ""
+    for i in txt:
+        if i == ")":
+            check = False
+            return data
+        if check == True:
+            data = data + i
+        if i == "(":
+            check = True
+
+
+df["Episodes"] = df["Title"].apply(extract_episodes).str.replace(" eps", "").astype(int)
