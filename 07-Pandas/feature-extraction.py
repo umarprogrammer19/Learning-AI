@@ -1,7 +1,11 @@
 import pandas as pd
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
-# Loading The Anime Data
+# 1) Loading Data
+print("--- 1) Loading Anime Data ---")
 df = pd.read_csv(r"anime.csv")
+print(df)
 
 # 0      1  Fullmetal Alchemist: BrotherhoodTV (64 eps)Apr...   9.10
 # 1      2  Steins;GateTV (24 eps)Apr 2011 - Sep 20112,473...   9.07
@@ -54,40 +58,45 @@ df = pd.read_csv(r"anime.csv")
 # 48    49  Mob Psycho 100 IIITV (12 eps)Oct 2022 - Dec 20...   8.71
 # 49    50  Rurouni Kenshin: Meiji Kenkaku Romantan - Tsui...   8.71
 
+# 2) Extracting Episode Counts
+print("\n--- 2) Extracting Episodes ---")
 
-# Make a New Column For Episode count
+
+# --- Custom Function Method ---
+# Excellent logic, but slow on large datasets.
 def extract_episodes(text):
     check = False
     data = ""
     for i in text:
         if i == ")":
-            check = False
             return data
-        if check == True:
-            data = data + i
+        if check:
+            data += i
         if i == "(":
             check = True
 
 
-df["Episodes"] = df["Title"].apply(extract_episodes).str.replace(" eps", "").astype(int)
+# df["Episodes_Manual"] = df["Title"].apply(extract_episodes).str.replace(" eps", "").astype(int)
+
+# --- PRO-TIP: Vectorized Regex Method ---
+# r'\((\d+) eps\)' means: Look for a "(", then capture any numbers (\d+), then look for " eps)"
+# It instantly extracts the number and skips the string replacement step!
+df["Episodes"] = df["Title"].str.extract(r"\((\d+) eps\)").astype(int)
+print("Episodes Extracted:\n", df[["Title", "Episodes"]])
 
 
-# Make a new column for timestamp
-def extraction_time(txt):
-    data = ""
-    for i in range(len(txt)):
-        if txt[i] == ")":
-            for j in range(i + 1, i + 20):
-                data += txt[j]
+# 3) Extracting Timestamps
+print("\n--- 3) Extracting Timestamps ---")
 
-            return data
+# --- PRO-TIP: Vectorized Regex Method ---
+# We want the text immediately following the closing parenthesis ")".
+# r'\)(.*)' means: Find the ")", and then capture absolutely everything else (.*) after it.
+df["Timestamp"] = df["Title"].str.extract(r"\)(.*)")
+print("Timestamps Extracted:\n", df[["Title", "Timestamp"]])
 
 
-df["Timestamp"] = df["Title"].apply(extraction_time)
-
-# Extract Months
-from dateutil.relativedelta import relativedelta
-from datetime import datetime
+# 4) Calculating Duration (Months)
+print("\n--- 4) Calculating Duration in Months ---")
 
 
 def calculate_total_months(period):
@@ -98,16 +107,31 @@ def calculate_total_months(period):
         r = relativedelta(end_date, start_date)
         return r.years * 12 + r.months + 1  # +1 to include the starting month
     except:
-        return None
+        return None  # Good error handling for movies with just one date!
 
 
+# Your apply function here is perfect because relativedelta requires complex object logic
 df["Months"] = df["Timestamp"].apply(calculate_total_months)
+print("Duration Extracted:\n", df[["Timestamp", "Months"]])
 
-# Which Anime has the highest score
+
+# 5) Data Queries
+print("\n--- 5) Data Queries ---")
+
+# Finding the Anime with the Highest Score
+# Your method is great!
 max_score_anime = df[df["Score"] == df["Score"].max()]
+print("Highest Scoring Anime Details:\n", max_score_anime[["Title", "Score"]])
+
+# Pro-Tip: You can also use .idxmax() to find the INDEX of the max value,
+# and then use .loc[] to grab it. This is slightly faster!
+# best_anime = df.loc[df["Score"].idxmax()]
+
 # Top 5 Highest Scoring Anime
-top_five = df["Title"].head()
+# .sort_values() ensures they are actually ranked before taking the .head()
+top_five = df.sort_values(by="Score", ascending=False).head(5)
+print("\nTop Scoring Anime:\n", top_five[["Title", "Score"]])
 
 # Highest Episodes Count
 max_episodes = df[df["Episodes"] == df["Episodes"].max()]
-print(max_episodes)
+print("\nAnime with the most episodes:\n", max_episodes[["Title", "Episodes"]])
