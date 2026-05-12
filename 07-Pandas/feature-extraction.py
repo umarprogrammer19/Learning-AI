@@ -89,15 +89,20 @@ df["Timestamp"] = df["Title"].apply(extraction_time)
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
 
+
 def calculate_total_months(period):
     try:
-        start_str, end_str = period.split(' - ')
-        start_date = datetime.strptime(start_str, '%b %Y')
-        end_date = datetime.strptime(end_str, '%b %Y')
+        start_str, end_str = period.split(" - ")
+        start_date = datetime.strptime(start_str, "%b %Y")
+        end_date = datetime.strptime(end_str, "%b %Y")
         r = relativedelta(end_date, start_date)
         return r.years * 12 + r.months + 1  # +1 to include the starting month
     except:
         return None
 
-df['Months'] = df['Timestamp'].apply(calculate_total_months)
-print(df)
+
+df["Months"] = df["Timestamp"].apply(calculate_total_months)
+
+# Which Anime has the highest score
+max_score_anime = df[df["Score"] == df["Score"].max()]
+print(max_score_anime)
