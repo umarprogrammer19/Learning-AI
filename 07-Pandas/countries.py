@@ -21,3 +21,9 @@ lowest_population_country_capital = df[df["population"] == df["population"].min(
 # top 5 countries with highest democratic score
 df.sort_values(by="democracy_score", ascending=False, inplace=True)
 highest_democretic_score = df["country"].head()
+
+# How many total regions are there
+regions = df["region"].value_counts().count()
+
+# how many countries lie in Eastern Europe region
+eastern_europe_region = df["region"].value_counts()["Eastern Europe"]
