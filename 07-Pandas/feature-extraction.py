@@ -105,4 +105,9 @@ df["Months"] = df["Timestamp"].apply(calculate_total_months)
 
 # Which Anime has the highest score
 max_score_anime = df[df["Score"] == df["Score"].max()]
-print(max_score_anime)
+# Top 5 Highest Scoring Anime
+top_five = df["Title"].head()
+
+# Highest Episodes Count
+max_episodes = df[df["Episodes"] == df["Episodes"].max()]
+print(max_episodes)
